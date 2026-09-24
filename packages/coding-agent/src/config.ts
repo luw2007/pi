@@ -502,7 +502,17 @@ export const PACKAGE_NAME: string = pkg.name || "@earendil-works/pi-coding-agent
 export const APP_NAME: string = piConfigName || "pi";
 export const APP_TITLE: string = piConfigName ? APP_NAME : "π";
 export const CONFIG_DIR_NAME: string = pkg.piConfig?.configDir || ".pi";
-export const VERSION: string = pkg.version || "0.0.0";
+
+// Local compiled builds embed PI_BUILD_TAG through Bun's --define option.
+// Keep the package version intact for ordinary Node/npm installs.
+const BUILD_TAG_RE = /^[A-Za-z0-9._-]+$/;
+const buildTag = process.env.PI_BUILD_TAG;
+if (buildTag && !BUILD_TAG_RE.test(buildTag)) {
+	throw new Error("PI_BUILD_TAG must contain only letters, numbers, dots, underscores, or hyphens");
+}
+const packageVersion = pkg.version || "0.0.0";
+export const VERSION =
+	buildTag && !packageVersion.endsWith(`+${buildTag}`) ? `${packageVersion}+${buildTag}` : packageVersion;
 
 // e.g., PI_CODING_AGENT_DIR or TAU_CODING_AGENT_DIR
 export const ENV_AGENT_DIR = `${APP_NAME.toUpperCase()}_CODING_AGENT_DIR`;
