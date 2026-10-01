@@ -503,8 +503,8 @@ export const APP_NAME: string = piConfigName || "pi";
 export const APP_TITLE: string = piConfigName ? APP_NAME : "π";
 export const CONFIG_DIR_NAME: string = pkg.piConfig?.configDir || ".pi";
 
-// Local compiled builds embed PI_BUILD_TAG through Bun's --define option.
-// Keep the package version intact for ordinary Node/npm installs.
+// Local packaged and compiled builds embed PI_BUILD_TAG through esbuild or Bun.
+// Keep the package version intact for ordinary source and npm installs.
 const BUILD_TAG_RE = /^[A-Za-z0-9._-]+$/;
 const buildTag = process.env.PI_BUILD_TAG;
 if (buildTag && !BUILD_TAG_RE.test(buildTag)) {
