@@ -85,10 +85,7 @@ function commonBuildOptions() {
 		absWorkingDir: repoRoot,
 		banner,
 		bundle: true,
-		define: {
-			PI_BUNDLED_NODE: "true",
-			"process.env.PI_BUILD_TAG": "\"luw2007\"",
-		},
+		define: { PI_BUNDLED_NODE: "true", "process.env.PI_BUILD_TAG": "\"luw2007\"" },
 		external: ["@earendil-works/chord", "@silvia-odwyer/photon-node"],
 		format: "esm",
 		legalComments: "none",
