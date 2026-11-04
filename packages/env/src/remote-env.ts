@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { type PlatformPath, posix, win32 } from "node:path";
 import { StringDecoder } from "node:string_decoder";
 import { fileURLToPath } from "node:url";
-import type { Context } from "@earendil-works/chord";
+import type { Context } from "@earendil-works/chord/context";
 import {
 	type BinaryReader,
 	type DirReader,
@@ -840,7 +840,7 @@ export class RemoteExecutionEnv implements ExecutionEnv {
 			const watcher = await RemoteWatcher.open(this.connection, resolved, onChange, this.#watchOptions);
 			const afterOpen = abortResult<FileWatcher>(context.abortSignal);
 			if (afterOpen) {
-				await watcher.close(context);
+				await watcher.stop(context);
 				return afterOpen;
 			}
 			return ok(watcher);
